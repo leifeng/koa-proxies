@@ -14,7 +14,7 @@ Powered by [`http-proxy`](https://github.com/nodejitsu/node-http-proxy).
 ## Installation
 
 ```bash
-$ npm install koa-proxies --save
+$ npm install koa-proxies-filter --save
 ```
 
 ## Options
