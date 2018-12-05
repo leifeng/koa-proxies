@@ -1,6 +1,7 @@
 {
   "name": "koa-proxies-filter",
   "description": "Http Proxy Middleware for Koa@2.x/next",
+  "version":"1.0.0",
   "keywords": [
     "koa",
     "middleware",
@@ -16,19 +17,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vagusX/koa-proxies.git"
+    "url": "https://github.com/leifeng/koa-proxies"
   },
   "config": {
     "ghooks": {
       "commit-msg": "node ./node_modules/.bin/validate-commit-msg"
     }
   },
-  "author": "vagusX",
+  "author": "zcl",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/vagusX/koa-proxies/issues"
-  },
-  "homepage": "https://github.com/vagusX/koa-proxies#readme",
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
