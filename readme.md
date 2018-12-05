@@ -45,6 +45,7 @@ app.use(proxy('/octocat', {
   changeOrigin: true,
   agent: new httpsProxyAgent('http://1.2.3.4:88'), // if you need or just delete this line
   rewrite: path => path.replace(/^\/octocat(\/|\/\w+)?$/, '/vagusx'),
+  filter:ctx=> ctx.request.method==='POST' 
   logs: true
 }))
 ```

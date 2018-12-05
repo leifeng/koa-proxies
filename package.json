@@ -1,5 +1,5 @@
 {
-  "name": "koa-proxies",
+  "name": "koa-proxies-filter",
   "description": "Http Proxy Middleware for Koa@2.x/next",
   "keywords": [
     "koa",

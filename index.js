@@ -14,7 +14,7 @@ const route = pathMatch({
   // path-to-regexp options
   sensitive: false,
   strict: false,
-  end: false
+  end: false,
 })
 
 let eventRegistered = false
@@ -34,7 +34,10 @@ module.exports = (context, options) => (ctx, next) => {
   }
   // object-rest-spread is still in stage-3
   // https://github.com/tc39/proposal-object-rest-spread
-  const { logs, rewrite, events } = opts
+  const { logs, rewrite, events, filter } = opts
+  if (filter && !filter(ctx)) {
+    return next()
+  }
 
   const httpProxyOpts = Object.keys(opts)
     .filter(n => ['logs', 'rewrite', 'events'].indexOf(n) < 0)
@@ -62,8 +65,8 @@ module.exports = (context, options) => (ctx, next) => {
     // Let the promise be solved correctly after the proxy.web.
     // The solution comes from https://github.com/nodejitsu/node-http-proxy/issues/951#issuecomment-179904134
     ctx.res.on('close', () => {
-      reject(new Error(`Http response closed while proxying ${ctx.req.oldPath}`));
-    });
+      reject(new Error(`Http response closed while proxying ${ctx.req.oldPath}`))
+    })
     ctx.res.on('finish', () => {
       resolve()
     })
@@ -71,7 +74,7 @@ module.exports = (context, options) => (ctx, next) => {
     proxy.web(ctx.req, ctx.res, httpProxyOpts, e => {
       const status = {
         ECONNREFUSED: 503,
-        ETIMEOUT: 504
+        ETIMEOUT: 504,
       }[e.code]
       ctx.status = status || 500
       resolve()
@@ -81,6 +84,12 @@ module.exports = (context, options) => (ctx, next) => {
 
 module.exports.proxy = proxy
 
-function logger (ctx, target) {
-  console.log('%s - %s %s proxy to -> %s', new Date().toISOString(), ctx.req.method, ctx.req.oldPath, url.resolve(target, ctx.req.url))
+function logger(ctx, target) {
+  console.log(
+    '%s - %s %s proxy to -> %s',
+    new Date().toISOString(),
+    ctx.req.method,
+    ctx.req.oldPath,
+    url.resolve(target, ctx.req.url)
+  )
 }
